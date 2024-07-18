@@ -1,11 +1,14 @@
 import React, {useState,useRef,useEffect} from 'react'
 import styles from './grid.module.css'
+import { myName } from './Constants'
+
 
 export const Grid = () => {
     const [mat, setMat] = useState(Array.from({length: 30}, () => Array.from({ length: 30 }, () => 0)))
     const [isStarted, setIsStarted] = useState(false)
     const intervalRef = useRef(null)
     const [empty,setEmpty] = useState(true)
+
     useEffect(() => {
         let empty = true
         for (let i =0 ;i < mat.length; i++){
@@ -35,6 +38,11 @@ export const Grid = () => {
         }
         return () => clearInterval(intervalRef.current);
     }, [isStarted]);
+
+    const myNameMat = () => {
+        setMat(myName)
+        setIsStarted(false)
+    }
     const handleCellClick = (rowInd,cellInd) => {
         console.log('insideHandle');
         setMat((prev) => {
@@ -122,7 +130,7 @@ export const Grid = () => {
                         <div className={`${styles.button} ${empty ? styles.disabled : ''}`} onClick={() => handleSimulation()}>
                             {isStarted ? 'STOP' : 'START'}
                         </div>
-                        <div className={styles.button}>
+                        <div className={styles.button}  onClick={() => myNameMat()}>
                             RESET
                         </div>
                     </div>                    
